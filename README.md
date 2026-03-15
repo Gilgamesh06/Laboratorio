@@ -1,4 +1,4 @@
-# Trabajo en Clase 1
+# Laboratorio: `01`
 
 * Ejemplo Sencillo de la arcquitectura en capas en **SpringBoot**
 
