@@ -1,26 +1,42 @@
 package co.edu.demoacademico.exception;
-import co.edu.demoacademico.model.dto.ErrorResponse;
-import org.springframework.http.HttpStatus;
+import co.edu.demoacademico.api.ApiResponse;
+import co.edu.demoacademico.api.ResponseBuilder;
+import co.edu.demoacademico.exception.BusinessException;
+import co.edu.demoacademico.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**
- * Clase para centralizar el manejo de excepciones
- * Como tal estaria tambien en la capa Presentación
- */
-@ControllerAdvice
+import java.util.HashMap;
+import java.util.Map;
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EstudianteNotFound.class)
-    public ResponseEntity<ErrorResponse> handleRuntimeException(EstudianteNotFound ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleNotFound(NotFoundException ex) {
+        return ResponseBuilder.notFound(ex.getMessage());
     }
 
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(IllegalStateException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Object>> handleBusiness(BusinessException ex) {
+        return ResponseBuilder.badRequest(ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Map<String, String>>> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors()
+                .forEach(fe -> errors.put(fe.getField(), fe.getDefaultMessage()));
+
+        return ResponseEntity.badRequest()
+                .body(new ApiResponse<>(false, "Validación fallida", errors));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Object>> handleGeneric(Exception ex) {
+        return ResponseBuilder.internalError("Error inesperado");
     }
 }
+

@@ -1,12 +1,12 @@
 package co.edu.demoacademico.model.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-/**
- * Esta clase pertenece a la capa de acceso a las datos
- */
+
 @Entity(name = "estudiante")
 public class Estudiante {
 
@@ -14,12 +14,9 @@ public class Estudiante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Column(nullable = false)
+
     private String nombre;
 
-    @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Formato de email inválido")
     @Column(nullable = false, unique = true)
     private String email;
 

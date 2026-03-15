@@ -12,9 +12,8 @@ import java.util.Optional;
 @Repository
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 
-    // ============================
-    // ZONA DE ACCESO A LA BD (JPA)
-    // ============================
-    Optional<Estudiante> findByEmail(String email);
+    boolean existsByEmail(String email);
+
+    boolean existsByEmailAndIdNot(String email, Long id);
 }
 
