@@ -1,0 +1,14 @@
+services:
+
+  demo_academico:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - demo_network
+
+networks:
+  demo_network:
+    driver: bridge
