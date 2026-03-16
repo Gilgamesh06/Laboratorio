@@ -2,67 +2,147 @@
 
 * A continuacion se realizara la muestra del nuevo conjunto de pruebas acorde al nueva estructura del proyecto demoacademico
 
-* **Nota:** En el laboratorio se especifica ralizar las siguientes pruebas:
+* **Nota:** En el laboratorio se especifica ralizar las siguientes Actividades:
 
-    1. `POST` estudiante válido → respuesta exitosa
-    2. `POST` email inválido → 400 (validación)
-    3. `POST` email duplicado → error controlado (A: 400, B: 409)
-    4. `GET` paginado → 200
-    5. `GET` buscar por email inexistente → 404 (en B) / 404 (en A si agregas endpoint)
+    1. Arranca la app
+    2. Entra a Swagger: http://localhost:8080/swagger-ui.html
+    3. Entra a H2: http://localhost:8080/h2-console y verifica conteos
 
-* Utilizando la herramienta Swagger
+        ```sql
+        SELECT COUNT(*) FROM programa;
+        SELECT COUNT(*) FROM asignatura;
+        SELECT COUNT(*) FROM grupo;
+        SELECT COUNT(*) FROM matricula;
+        ```
+    4. Pruebas en Swagger
+
+        1. `POST` Programa
+        2. `POST` Asignatura con programaId
+        3. `POST` Grupo con asignaturaId y cupoMax=2
+        4. `POST` Estudiante (o usa seed)
+        5. `POST` Matrícula 1 (OK)
+        6. `POST` Matrícula 2 (OK)
+        7. `POST` Matrícula 3 al mismo grupo (debe fallar por cupo)
+        8. `POST` Matrícula duplicada (debe fallar por duplicado)
+
+        * Pero ya que hemos trabajado en el `laboratorio 01 y 02` con Postman seguiremos usandolo para esta.
+
+    ## 1. Arranca la app
+
+    ![**Run App**](/Documentacion/img/run_app.png)
+
+
+    ## 2. Entra a Swagger: `http://localhost:8080/swagger-ui.html`
 
     ![**Swagger**](/Documentacion/img/swagger.png)
-
-* Pero ya que hemos trabajado en el `laboratorio 01` con Postman seguiremos usandolo para esta.
-
-    ## 1. `POST` estudiante válido → respuesta exitosa (`http://localhost:8080/api/estudiantes`)
-
-    * Cuerpo de la solicitud
-
-        ```json
-        {
-        "nombre":"Dario",
-        "email":"dario@demo.com"
-        }
-        ```
     
-    ![**Estudiante Valido**](/Documentacion/img/estudiante_valido.png)
+    ## 3. Entra a H2: http://localhost:8080/h2-console y verifica 
 
-    ## 2. `POST` email inválido → 400 (validación) (`http://localhost:8080/api/estudiantes`)
-
-    * Cuerpo de la solicitud
-
-        ```json
-        {
-        "nombre": "Pepito Peres",
-        "email": "correoInvalido"
-        }
-        ```
+    ```sql
+    SELECT COUNT(*) FROM programa;
+    SELECT COUNT(*) FROM asignatura;
+    SELECT COUNT(*) FROM grupo;
+    SELECT COUNT(*) FROM matricula;
+    ```
     
-    ![**Email inválido**](/Documentacion/img/email_invalido.png)
-
-    ## 3. `POST` email duplicado → error controlado (A: 400, B: 409)  (`http://localhost:8080/api/estudiantes`)
-
-    * Cuerpo de la solicitud
-
-        ```json
-        {
-        "nombre": "Ana Rodriguez",
-        "email": "ana@demo.com"
-        }
-        ```
+    ![**SQL Querys**](/Documentacion/img/sql_querys.png)
     
-    ![**Email Duplicado**](/Documentacion/img/email_duplicado.png)
+    ## 4. Pruebas en Swagger
 
-    ## 4. `GET` paginado → 200 (`http://localhost:8080/api/estudiantes?page=0&size=5&sort=nombre,asc`)
+    * A continuacion se realizaran las pruebas pero usando Postman
 
-    ![**Get Pagínado**](/Documentacion/img/get_paginado.png)
+        ### 1. `POST` Programa: `http://localhost:8080/api/programas`
 
-    ## 5. `GET` buscar por email inexistente → 404 (en B) / 404 (en A si agregas endpoint) (`http://localhost:8080/api/estudiantes/email/sara@demo.com`)
+        * Cuerpo de la solicitud
 
-    ![**Email No Existente**](/Documentacion/img/email_no_existente.png)
+            ```json
+            {
+            "codigo": "PROG-ING",
+            "nombre": "Ingeniería de Software"
+            }
+            ```
+        
+        ![**POST Programa**](/Documentacion/img/post_programa.png)
 
-    ## Funcionamiento de Seeder con Faker
+        ### 2. `POST` Asignatura con programaId `http://localhost:8080/api/asignaturas`
 
-    ![**Data Automatica**](/Documentacion/img/seeder.png)
+        * Cuerpo de la solicitud
+
+            ```json
+            {
+            "codigo": "ASIG-IS3",
+            "nombre": "Ingeniería de Software III",
+            "creditos": 3,
+            "programaId": 1
+            }
+            ```
+
+        ![**Post Asignatura**](/Documentacion/img/post_asignatura.png)
+
+        ### 3. `POST` Grupo con asignaturaId y cupoMax=2 `http://localhost:8080/api/grupos`
+
+        * Cuerpo de la solicitud
+
+            ```json
+            {
+            "codigoGrupo": "G-IS3-01",
+            "cupoMax": 2,
+            "asignaturaId": 1
+            }
+            ```
+
+        ![**Post Grupo**](/Documentacion/img/post_grupo.png)
+
+        ### 4. `POST` Estudiante Se uso un seed 
+
+        ### 5. `POST` Matrícula 1 (OK) `http://localhost:8080/api/matriculas`
+
+        * Cuerpo de la solicitud
+
+            ```json
+            {
+            "estudianteId": 1,
+            "grupoId": 1
+            }
+            ```
+
+        ![**Post Matrícula**](/Documentacion/img/post_matricula_1.png)
+
+        ### 6. `POST` Matrícula 2 (OK) `http://localhost:8080/api/matriculas`
+
+        * Cuerpo de la solicitud
+
+            ```json
+            {
+            "estudianteId": 2,
+            "grupoId": 1
+            }
+            ```
+        
+        ![**Post Matrícula**](/Documentacion/img/post_matricula_2.png)
+
+        ### 7. `POST` Matrícula 3 al mismo grupo (debe fallar por cupo) `http://localhost:8080/api/matriculas`
+
+        * Cuerpo de la solicitud
+
+            ```json
+            {
+            "estudianteId": 3,
+            "grupoId": 1
+            }
+            ```
+        
+        ![**Exception Cupo no disponible**](/Documentacion/img/cupo_no_disponible.png)
+
+        ### 8. `POST` Matrícula duplicada (debe fallar por duplicado) `http://localhost:8080/api/matriculas`
+
+        * Cuerpo de la solicitud
+
+            ```json
+            {
+            "estudianteId": 1,
+            "grupoId": 1
+            }
+            ```
+        
+        ![**Exception estudiante ya matriculado en el grupo**](/Documentacion/img/estudiante_ya_matriculado.png)        

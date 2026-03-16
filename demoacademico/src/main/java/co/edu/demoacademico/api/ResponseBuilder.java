@@ -14,7 +14,7 @@ public class ResponseBuilder {
 
     public static <T> ResponseEntity<ApiResponse<T>> created(String message, T data){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(false, message, null));
+                .body(new ApiResponse<>(true, message, null));
     }
 
     public static ResponseEntity<ApiResponse<Object>> badRequest(String message){

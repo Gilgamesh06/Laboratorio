@@ -1,6 +1,6 @@
-# Laboratorio: `02`
+# Laboratorio: `03` Parte 1
 
-* **Se implemento la opción A**
+* **Se implemento la Parte 1 del laboratorio 03**
 
 * **Indice**
 

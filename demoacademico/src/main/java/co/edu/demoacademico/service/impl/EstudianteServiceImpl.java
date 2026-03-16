@@ -1,9 +1,10 @@
-package co.edu.demoacademico.service;
+package co.edu.demoacademico.service.impl;
 
 import co.edu.demoacademico.exception.BusinessException;
 import co.edu.demoacademico.exception.NotFoundException;
 import co.edu.demoacademico.model.entity.Estudiante;
 import co.edu.demoacademico.repository.EstudianteRepository;
+import co.edu.demoacademico.service.EstudianteService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class EstudianteServiceImpl implements EstudianteService{
+public class EstudianteServiceImpl implements EstudianteService {
 
     private final EstudianteRepository repo;
 

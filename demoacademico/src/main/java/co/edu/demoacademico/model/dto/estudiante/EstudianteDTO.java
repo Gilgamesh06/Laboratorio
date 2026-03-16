@@ -1,4 +1,4 @@
-package co.edu.demoacademico.model.dto;
+package co.edu.demoacademico.model.dto.estudiante;
 
 public class EstudianteDTO {
 

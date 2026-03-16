@@ -1,4 +1,4 @@
-package co.edu.demoacademico.model.dto;
+package co.edu.demoacademico.model.dto.estudiante;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
