@@ -8,6 +8,91 @@
       "name": "Create Student",
       "item": [
         {
+          "name": "Exception",
+          "item": [
+            {
+              "name": "Exception Email exist",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Ana Rodriguez\",\n  \"email\": \"ana@demo.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Exception Email Invalid",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Pepito Peres\",\n  \"email\": \"correoInvalido\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
           "name": "Ok",
           "item": [
             {
@@ -51,148 +136,6 @@
               }
             }
           ]
-        },
-        {
-          "name": "Exception",
-          "item": [
-            {
-              "name": "Exception Email exist",
-              "request": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "disabled": false,
-                    "type": "default"
-                  }
-                ],
-                "auth": {
-                  "type": "noauth"
-                },
-                "description": "",
-                "url": {
-                  "raw": "http://localhost:8080/api/estudiantes",
-                  "protocol": "http",
-                  "host": [
-                    "localhost:8080"
-                  ],
-                  "path": [
-                    "api",
-                    "estudiantes"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Ana Rodriguez\",\n  \"email\": \"ana@demo.com\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Get Student",
-      "item": [
-        {
-          "name": "Ok",
-          "item": [
-            {
-              "name": "Get Student By Email",
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "disabled": false,
-                    "type": "default"
-                  }
-                ],
-                "auth": {
-                  "type": "noauth"
-                },
-                "description": "",
-                "url": {
-                  "raw": "http://localhost:8080/api/estudiantes/email",
-                  "protocol": "http",
-                  "host": [
-                    "localhost:8080"
-                  ],
-                  "path": [
-                    "api",
-                    "estudiantes",
-                    "email"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\":\"juan@demo.com\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        {
-          "name": "Exception",
-          "item": [
-            {
-              "name": "Not Found Student By Email",
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json",
-                    "disabled": false,
-                    "type": "default"
-                  }
-                ],
-                "auth": {
-                  "type": "noauth"
-                },
-                "description": "",
-                "url": {
-                  "raw": "http://localhost:8080/api/estudiantes/email",
-                  "protocol": "http",
-                  "host": [
-                    "localhost:8080"
-                  ],
-                  "path": [
-                    "api",
-                    "estudiantes",
-                    "email"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"email\":\"student@demo.com\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              }
-            }
-          ]
         }
       ]
     },
@@ -209,7 +152,7 @@
             },
             "description": "",
             "url": {
-              "raw": "http://localhost:8080/api/estudiantes",
+              "raw": "http://localhost:8080/api/estudiantes?page=0&size=5&sort=nombre,asc",
               "protocol": "http",
               "host": [
                 "localhost:8080"
@@ -218,10 +161,180 @@
                 "api",
                 "estudiantes"
               ],
-              "query": [],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                },
+                {
+                  "key": "sort",
+                  "value": "nombre,asc"
+                }
+              ],
               "variable": []
             }
           }
+        }
+      ]
+    },
+    {
+      "name": "Get Student By Id",
+      "item": [
+        {
+          "name": "Ok",
+          "item": [
+            {
+              "name": "Student Exists Id 1",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes/1",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes",
+                    "1"
+                  ],
+                  "query": [],
+                  "variable": []
+                }
+              }
+            },
+            {
+              "name": "Student Exists Id 2",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes/2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes",
+                    "2"
+                  ],
+                  "query": [],
+                  "variable": []
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Exception",
+          "item": [
+            {
+              "name": "Student Not Found Id 100",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes/100",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes",
+                    "100"
+                  ],
+                  "query": [],
+                  "variable": []
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Get Student By Email",
+      "item": [
+        {
+          "name": "Ok",
+          "item": [
+            {
+              "name": "Student By Email Exists",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes/email/ana@demo.com",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes",
+                    "email",
+                    "ana@demo.com"
+                  ],
+                  "query": [],
+                  "variable": []
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Exception",
+          "item": [
+            {
+              "name": "Student Not Found By Email",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8080/api/estudiantes/email/sara@demo.com",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8080"
+                  ],
+                  "path": [
+                    "api",
+                    "estudiantes",
+                    "email",
+                    "sara@demo.com"
+                  ],
+                  "query": [],
+                  "variable": []
+                }
+              }
+            }
+          ]
         }
       ]
     }

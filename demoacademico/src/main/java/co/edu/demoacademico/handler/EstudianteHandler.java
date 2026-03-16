@@ -7,7 +7,9 @@ import co.edu.demoacademico.model.entity.Estudiante;
 import co.edu.demoacademico.service.EstudianteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EstudianteHandler {
 
     private final EstudianteService service;
@@ -27,6 +29,10 @@ public class EstudianteHandler {
 
     public EstudianteDTO obtener(Long id) {
         return toDto(service.obtenerPorId(id));
+    }
+
+    public EstudianteDTO obtenerPorEmail(String email) {
+        return toDto(service.obtenerPorEmail(email));
     }
 
     public Page<EstudianteDTO> listar(Pageable pageable) {

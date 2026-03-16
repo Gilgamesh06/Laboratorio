@@ -7,6 +7,8 @@ import co.edu.demoacademico.model.dto.EstudianteDTO;
 import co.edu.demoacademico.model.dto.EstudianteUpdateDTO;
 import co.edu.demoacademico.handler.EstudianteHandler;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,11 @@ public class EstudianteController {
         return ResponseBuilder.created("Estudiante creado", handler.crear(in));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ApiResponse<EstudianteDTO>> obtenerPorEmail(@PathVariable @Valid @NotBlank(message = "El email no debe ser vacio")
+                                                                      @Email(message = "Formato de email Invalido") String email){
+        return ResponseBuilder.ok("Ok", handler.obtenerPorEmail(email));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<EstudianteDTO>> obtener(@PathVariable Long id) {
         return ResponseBuilder.ok("OK", handler.obtener(id));

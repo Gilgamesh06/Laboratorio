@@ -1,6 +1,6 @@
-# Laboratorio: `01`
+# Laboratorio: `02`
 
-* Ejemplo Sencillo de la arcquitectura en capas en **SpringBoot**
+* **Se implemento la opción A**
 
 * **Indice**
 

@@ -8,6 +8,7 @@ public  interface EstudianteService {
 
     Estudiante crear(Estudiante estudiante);
     Estudiante obtenerPorId(Long id);
+    Estudiante obtenerPorEmail(String email);
     Page<Estudiante> listar(Pageable pageable);
     Estudiante actualizar(Long id, Estudiante estudiante);
     void  eliminar(Long id);

@@ -7,8 +7,11 @@ import co.edu.demoacademico.repository.EstudianteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 
+@Service
+@Transactional
 public class EstudianteServiceImpl implements EstudianteService{
 
     private final EstudianteRepository repo;
@@ -33,6 +36,12 @@ public class EstudianteServiceImpl implements EstudianteService{
 
     }
 
+    @Override
+    @Transactional
+    public Estudiante obtenerPorEmail(String email){
+        return repo.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(("Estudiante no encontrado")));
+    }
 
     @Override
     @Transactional
