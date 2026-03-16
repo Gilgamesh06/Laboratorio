@@ -1,6 +1,6 @@
-# Laboratorio: `03` Parte 1
+# Laboratorio: `03` Parte 2
 
-* **Se implemento la Parte 1 del laboratorio 03**
+* **Se implemento la Parte 2 del laboratorio 03**
 
 * **Indice**
 

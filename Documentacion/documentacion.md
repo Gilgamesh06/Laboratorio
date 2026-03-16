@@ -2,7 +2,7 @@
 
 * A continuacion se realizara la muestra del nuevo conjunto de pruebas acorde al nueva estructura del proyecto demoacademico
 
-* **Nota:** En el laboratorio se especifica ralizar las siguientes Actividades:
+* **Nota:** En el laboratorio se especifica ralizar las siguientes Actividades: que ya se realizaron en la parte uno para validar que se hicieron de nuevo puede utilizar el timestamp de las capturas de pantalla.
 
     1. Arranca la app
     2. Entra a Swagger: http://localhost:8080/swagger-ui.html
