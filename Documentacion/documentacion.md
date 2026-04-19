@@ -1,148 +1,80 @@
 # Documentacion 
 
-* A continuacion se realizara la muestra del nuevo conjunto de pruebas acorde al nueva estructura del proyecto demoacademico
+* A continuacion se realizara el conjunto de actividades del `Lab 04`
 
-* **Nota:** En el laboratorio se especifica ralizar las siguientes Actividades:
+    ## Ejecutar los dos contenedores 
 
-    1. Arranca la app
-    2. Entra a Swagger: http://localhost:8080/swagger-ui.html
-    3. Entra a H2: http://localhost:8080/h2-console y verifica conteos
+    ![**docker ps**](img/docker_ps.png)
 
-        ```sql
-        SELECT COUNT(*) FROM programa;
-        SELECT COUNT(*) FROM asignatura;
-        SELECT COUNT(*) FROM grupo;
-        SELECT COUNT(*) FROM matricula;
-        ```
-    4. Pruebas en Swagger
+    ## Pruebas obligatorias en Swagger
 
-        1. `POST` Programa
-        2. `POST` Asignatura con programaId
-        3. `POST` Grupo con asignaturaId y cupoMax=2
-        4. `POST` Estudiante (o usa seed)
-        5. `POST` Matrícula 1 (OK)
-        6. `POST` Matrícula 2 (OK)
-        7. `POST` Matrícula 3 al mismo grupo (debe fallar por cupo)
-        8. `POST` Matrícula duplicada (debe fallar por duplicado)
+    1. **URLs que debe verificarse**
 
-        * Pero ya que hemos trabajado en el `laboratorio 01 y 02` con Postman seguiremos usandolo para esta.
+        * Swagger de auth-service: `http://localhost:8081/swagger-ui.html`
 
-    ## 1. Arranca la app
+            ![**Swagger auth-service**](img/swagger_auth_service.png)
 
-    ![**Run App**](/Documentacion/img/run_app.png)
+        * Swagger de consulta-service: `http://localhost:8082/swagger-ui.html`
+
+            ![**Swagger de consulta-service**](img/swagger_consulta_service.png)
+
+        * H2 Console de auth-service: `http://localhost:8081/h2-console`
+
+            * No permite conexion: `webAllowOthers`
+
+                ![**H2 Console remote conection no permit**](img/web_allow_others.png)
+
+            * Para permitir agregar esto en el `application.yml`
+
+                ```yaml
+                  h2:
+                    console:
+                    settings:
+                        web-allow-others: true
+                    enabled: true
+                    path: /h2-console
+                ```
+
+            ![**Console de auth-service**](img/h2_auth_service.png)
+
+        * H2 Console de consulta-service: `http://localhost:8082/h2-console`
+
+            ![**Console de consulta-service**](img/h2_consulta_service.png)
 
 
-    ## 2. Entra a Swagger: `http://localhost:8080/swagger-ui.html`
-
-    ![**Swagger**](/Documentacion/img/swagger.png)
     
-    ## 3. Entra a H2: http://localhost:8080/h2-console y verifica 
+    ## Actividades minimas obligatorias
 
-    ```sql
-    SELECT COUNT(*) FROM programa;
-    SELECT COUNT(*) FROM asignatura;
-    SELECT COUNT(*) FROM grupo;
-    SELECT COUNT(*) FROM matricula;
-    ```
+
+    1. **Realizar login existoso con un usuario válido**
+
+        ![**Login exitoso**](img/post_login_auth_service.png)
+
+    2. **Realziar login fallido con contraseña incorrecta**
+
+        ![**Login incorrecto**](img/login_incorrecto.png)
+
+    3. **Validar manualmente un token válido**
+
+        ![**Validate token**](img/validate_token.png)
+
     
-    ![**SQL Querys**](/Documentacion/img/sql_querys.png)
-    
-    ## 4. Pruebas en Swagger
+    4. **Consumir GET /api/estudiantes con un token válido.**
 
-    * A continuacion se realizaran las pruebas pero usando Postman
-
-        ### 1. `POST` Programa: `http://localhost:8080/api/programas`
-
-        * Cuerpo de la solicitud
-
-            ```json
-            {
-            "codigo": "PROG-ING",
-            "nombre": "Ingeniería de Software"
-            }
-            ```
         
-        ![**POST Programa**](/Documentacion/img/post_programa.png)
+        * Colocar token en Authorize
 
-        ### 2. `POST` Asignatura con programaId `http://localhost:8080/api/asignaturas`
+            ![**Authorize**](img/authorize_buttom.png)
 
-        * Cuerpo de la solicitud
+        * Ejecutar GET `/api/estudiantes`
 
-            ```json
-            {
-            "codigo": "ASIG-IS3",
-            "nombre": "Ingeniería de Software III",
-            "creditos": 3,
-            "programaId": 1
-            }
-            ```
+            ![**Estudiantes**](img/get_estudiantes.png)
 
-        ![**Post Asignatura**](/Documentacion/img/post_asignatura.png)
 
-        ### 3. `POST` Grupo con asignaturaId y cupoMax=2 `http://localhost:8080/api/grupos`
+    5. **Consumir GET /api/estudiantes sin autorizar en Swagger.**
 
-        * Cuerpo de la solicitud
+        ![**Get sin autorizar**](img/get_sin_autorizar.png)
 
-            ```json
-            {
-            "codigoGrupo": "G-IS3-01",
-            "cupoMax": 2,
-            "asignaturaId": 1
-            }
-            ```
+    6. **Consumir GET /api/estudiantes con token inválido.**
 
-        ![**Post Grupo**](/Documentacion/img/post_grupo.png)
-
-        ### 4. `POST` Estudiante Se uso un seed 
-
-        ### 5. `POST` Matrícula 1 (OK) `http://localhost:8080/api/matriculas`
-
-        * Cuerpo de la solicitud
-
-            ```json
-            {
-            "estudianteId": 1,
-            "grupoId": 1
-            }
-            ```
-
-        ![**Post Matrícula**](/Documentacion/img/post_matricula_1.png)
-
-        ### 6. `POST` Matrícula 2 (OK) `http://localhost:8080/api/matriculas`
-
-        * Cuerpo de la solicitud
-
-            ```json
-            {
-            "estudianteId": 2,
-            "grupoId": 1
-            }
-            ```
-        
-        ![**Post Matrícula**](/Documentacion/img/post_matricula_2.png)
-
-        ### 7. `POST` Matrícula 3 al mismo grupo (debe fallar por cupo) `http://localhost:8080/api/matriculas`
-
-        * Cuerpo de la solicitud
-
-            ```json
-            {
-            "estudianteId": 3,
-            "grupoId": 1
-            }
-            ```
-        
-        ![**Exception Cupo no disponible**](/Documentacion/img/cupo_no_disponible.png)
-
-        ### 8. `POST` Matrícula duplicada (debe fallar por duplicado) `http://localhost:8080/api/matriculas`
-
-        * Cuerpo de la solicitud
-
-            ```json
-            {
-            "estudianteId": 1,
-            "grupoId": 1
-            }
-            ```
-        
-        ![**Exception estudiante ya matriculado en el grupo**](/Documentacion/img/estudiante_ya_matriculado.png)        
+        ![**Get token invalido**](img/get_token_invalido.png)
